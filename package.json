@@ -1,0 +1,25 @@
+{
+  "name": "javascript-rubiks-cube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigsaigon333/javascript-rubiks-cube.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bigsaigon333/javascript-rubiks-cube/issues"
+  },
+  "homepage": "https://github.com/bigsaigon333/javascript-rubiks-cube#readme",
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "jest": "^26.6.3"
+  }
+}
