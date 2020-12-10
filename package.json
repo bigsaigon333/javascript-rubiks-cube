@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
-    "start": "node index.js"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "start": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
