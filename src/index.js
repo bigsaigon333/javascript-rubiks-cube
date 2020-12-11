@@ -27,9 +27,8 @@ rubiksCube.printCurrentState();
 rl.prompt();
 
 rl.on("line", input => {
-  const validCommands = parseValidCommands(input);
-
-  validCommands.forEach(command => {
+  parseValidCommands(input).forEach(command => {
+    console.log("");
     console.log(command);
 
     if (command === "Q") {
