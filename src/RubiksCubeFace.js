@@ -8,7 +8,7 @@ export default class RubiksCubeFace {
   }
 
   toString() {
-    return this.matrix.map(col => col.join(" ")).join("\n");
+    return this.face.map(col => col.join(" ")).join("\n");
   }
 
   setColumn(row, dataArray) {
@@ -29,5 +29,9 @@ export default class RubiksCubeFace {
 
   getRow(row) {
     return [...this.face[row]];
+  }
+
+  getArray() {
+    return JSON.parse(JSON.stringify(this.face));
   }
 }
