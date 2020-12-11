@@ -12,19 +12,19 @@ export default class RubiksCubeFace {
   }
 
   setColumn(col) {
-    return dataArray => {
-      dataArray.forEach((data, rowIndex) => this.face[rowIndex][col] = data);
+    return colorArray => {
+      colorArray.forEach((color, rowIndex) => this.face[rowIndex][col] = color);
     };
   }
 
   setRow(row) {
-    return dataArray => {
-      dataArray.forEach((data, colIndex) => this.face[row][colIndex] = data);
+    return colorArray => {
+      colorArray.forEach((color, colIndex) => this.face[row][colIndex] = color);
     };
   }
 
   getColumn(col) {
-    return () => this.face.map(row => row.find((data, colIndex) => colIndex === col));
+    return () => this.face.map(row => row[col]);
   }
 
   getRow(row) {
@@ -36,10 +36,10 @@ export default class RubiksCubeFace {
   }
 
   rotate(isClockwise) {
-    const data = this.adjacentGetter.map(getter => getter());
-    const nextData = isClockwise ? this.unshift(data) : this.shift(data);
+    const colorArray = this.adjacentGetter.map(getter => getter());
+    const nextColorArray = isClockwise ? this.unshift(colorArray) : this.shift(colorArray);
 
-    this.adjacentSetter.map((setter, index) => setter(nextData[index]));
+    this.adjacentSetter.forEach((setter, index) => setter(nextColorArray[index]));
   }
 
   shift(array) {
