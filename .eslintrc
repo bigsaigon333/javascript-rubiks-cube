@@ -25,7 +25,13 @@
     "max-classes-per-file": "error",
     "no-empty-function": "error",
     "no-unused-expressions": "error",
-    "no-magic-numbers": "error",
+    "no-magic-numbers": [
+      "error",
+      {
+        "ignoreArrayIndexes": true,
+        "detectObjects": true
+      }
+    ],
     "no-multi-spaces": "error",
     "no-use-before-define": "error",
     "brace-style": "error",
@@ -70,7 +76,12 @@
       "error",
       "consistent"
     ],
-    "object-property-newline": "error",
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": true
+      }
+    ],
     "lines-between-class-members": "error",
     "prefer-arrow-callback": "error",
     "arrow-parens": [
