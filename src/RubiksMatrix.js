@@ -8,8 +8,15 @@ export default class RubiksMatrix {
 
   }
 
+  printCurrentState() {
+    console.log(`${this.toString()}\n`);
+  }
+
   toString() {
     return this.matrix.map(col => col.join(" ")).join("\n");
   }
   
+  executeAlongCommand(command) {
+    // TODO: 정해진 동작을 실현!
+  }
 }
