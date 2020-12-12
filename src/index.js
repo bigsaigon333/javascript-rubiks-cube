@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 const exitProgram = (hrstart, countExecutedCommands) => {
   const hrend = process.hrtime(hrstart);
 
-  console.log(`경과시간: ${hrend[0]}s`);
+  console.log(`경과시간: ${hrend}s`);
   console.log(`조작갯수: ${countExecutedCommands}`);
   console.log("이용해주셔서 감사합니다. 뚜뚜뚜.");
   
@@ -20,7 +20,7 @@ const exitProgram = (hrstart, countExecutedCommands) => {
 };
 
 const parseValidCommands = input => {
-  const rCommandsList = /(F'|F|B'|B|U'|U|D'|D|L'|L|R'|R|Q)2?/g;
+  const rCommandsList = /(F'|F|B'|B|U'|U|D'|D|L'|L|R'|R|Q|S)2?/g;
   const matchedCommands = input.match(rCommandsList);
 
   return matchedCommands === null ? [] : matchedCommands;

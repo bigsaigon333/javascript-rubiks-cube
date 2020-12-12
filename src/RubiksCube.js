@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import RubiksCubeFace from "./RubiksCubeFace.js";
+import { getRandomRotationCommand } from "./util.js";
 
 export default class RubiksCube {
   constructor() {
@@ -121,8 +122,27 @@ export default class RubiksCube {
   }
 
   executeSingleCommand({ singleCommand, isClockwise }) {
-    this.faces[singleCommand].rotate(isClockwise);
+    if (singleCommand === "S") {
+      this.scrambleCube();
+    } else {
+      this.executeRotationCommand({ singleCommand, isClockwise });
+    }
+    
     this.countExecutedCommands++;
+  }
+
+  executeRotationCommand({ singleCommand, isClockwise }) {
+    this.faces[singleCommand].rotate(isClockwise);
+  }
+
+  scrambleCube() {
+    const NUM_RANDOM_ROTATION_COMMAND = 100;
+    
+    for (let i = 0; i < NUM_RANDOM_ROTATION_COMMAND; i++) {
+      const randomRotationCommand = getRandomRotationCommand();
+      const { singleCommand: singleRandomCommand, isClockwise } = this.parseCommand(randomRotationCommand);
+      this.executeRotationCommand({ singleCommand: singleRandomCommand, isClockwise });
+    }
   }
 
   getCountExecutedCommands() {
