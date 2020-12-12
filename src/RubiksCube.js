@@ -11,6 +11,7 @@ export default class RubiksCube {
       B: new RubiksCubeFace("Y"),
       D: new RubiksCubeFace("R"),
     };
+    this.countExecutedCommands = 0;
 
     this.setAdjacentPart();
   }
@@ -121,5 +122,10 @@ export default class RubiksCube {
 
   executeSingleCommand({ singleCommand, isClockwise }) {
     this.faces[singleCommand].rotate(isClockwise);
+    this.countExecutedCommands++;
+  }
+
+  getCountExecutedCommands() {
+    return this.countExecutedCommands;
   }
 }

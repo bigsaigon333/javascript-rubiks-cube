@@ -8,8 +8,13 @@ const rl = readline.createInterface({
   prompt: "CUBE> "
 });
 
-const exitProgram = () => {
-  console.log("Bye~");
+const exitProgram = (hrstart, countExecutedCommands) => {
+  const hrend = process.hrtime(hrstart);
+
+  console.log(`경과시간: ${hrend[0]}s`);
+  console.log(`조작갯수: ${countExecutedCommands}`);
+  console.log("이용해주셔서 감사합니다. 뚜뚜뚜.");
+  
   rl.close();
   process.exit(0);
 };
@@ -20,6 +25,8 @@ const parseValidCommands = input => {
 
   return matchedCommands === null ? [] : matchedCommands;
 };
+
+const hrstart = process.hrtime();
 
 const rubiksCube = new RubiksCube();
 rubiksCube.printCurrentState();
@@ -32,7 +39,7 @@ rl.on("line", input => {
     console.log(command);
 
     if (command === "Q") {
-      exitProgram();
+      exitProgram(hrstart, rubiksCube.getCountExecutedCommands());
     }
     rubiksCube.executeAlongCommand(command);
     rubiksCube.printCurrentState();
