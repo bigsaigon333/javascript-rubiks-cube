@@ -1,49 +1,62 @@
 import readline from "readline";
 
 import RubiksCube from "./RubiksCube.js";
+import { parseValidCommands, breakUpDoubleCommand } from "./util.js";
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  prompt: "CUBE> "
-});
-
-const exitProgram = (hrstart, countExecutedCommands) => {
-  const hrend = process.hrtime(hrstart);
-
-  console.log(`경과시간: ${hrend}s`);
-  console.log(`조작갯수: ${countExecutedCommands}`);
-  console.log("이용해주셔서 감사합니다. 뚜뚜뚜.");
+class App {
+  constructor() {
+    this.initializeVarialbes();
   
-  rl.close();
-  process.exit(0);
-};
+    this.rubiksCube.printCurrentState();
 
-const parseValidCommands = input => {
-  const rCommandsList = /(F'|F|B'|B|U'|U|D'|D|L'|L|R'|R|Q|S)2?/g;
-  const matchedCommands = input.match(rCommandsList);
+    this.rl.prompt();
+    this.listenOnLine();
+  }
 
-  return matchedCommands === null ? [] : matchedCommands;
-};
+  initializeVarialbes() {
+    this.rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      prompt: "CUBE> "
+    });
 
-const hrstart = process.hrtime();
+    this.hrstart = process.hrtime();
+    this.countExecutedCommands = 0;
+    this.rubiksCube = new RubiksCube();
+  }
 
-const rubiksCube = new RubiksCube();
-rubiksCube.printCurrentState();
+  listenOnLine() {
+    this.rl.on("line", input => {
+      parseValidCommands(input).forEach(command => {
+        console.log("");
+        console.log(command);
+    
+        breakUpDoubleCommand(command).forEach(singleCommand => this.launchSingleCommand(singleCommand));
+        this.rubiksCube.printCurrentState();
+      });
+    
+      this.rl.prompt();
+    }); 
+  }
 
-rl.prompt();
-
-rl.on("line", input => {
-  parseValidCommands(input).forEach(command => {
-    console.log("");
-    console.log(command);
-
-    if (command === "Q") {
-      exitProgram(hrstart, rubiksCube.getCountExecutedCommands());
+  launchSingleCommand(singleCommand) {
+    if (singleCommand === "Q") {
+      this.exitProgram();
     }
-    rubiksCube.executeAlongCommand(command);
-    rubiksCube.printCurrentState();
-  });
 
-  rl.prompt();
-}); 
+    this.rubiksCube.executeAlongCommand(singleCommand);
+    this.countExecutedCommands++;
+  }
+
+  exitProgram() {
+    const executionTimeSec = process.hrtime(this.hrstart);
+    console.log(`경과시간: ${executionTimeSec}s`);
+    console.log(`조작갯수: ${this.countExecutedCommands}`);
+    console.log("이용해주셔서 감사합니다. 뚜뚜뚜.");
+    
+    this.rl.close();
+    process.exit(0);
+  }
+}
+
+new App();
